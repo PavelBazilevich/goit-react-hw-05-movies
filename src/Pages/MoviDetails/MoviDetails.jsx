@@ -1,4 +1,5 @@
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import { LinkStyled } from './MoviDetails.styled';
 import { useEffect, useState } from 'react';
 import { getDetails } from 'Utils/Api';
 import { MovieInfo } from 'components/MovieInfo/MovieInfo';
@@ -23,13 +24,12 @@ const MoviDetails = () => {
   const location = useLocation();
   const gobackLink = location.state?.from ?? '/movies';
 
-  console.log(moviInfo);
-
   return (
     <main>
       <>
-        <Link to={gobackLink}> Go Back</Link>
-        {!moviInfo && <MovieInfo moviInfo={moviInfo} />}
+        <LinkStyled to={gobackLink}> ⬅️ Go Back</LinkStyled>
+        {error && <h2>{error}</h2>}
+        {moviInfo !== 0 && <MovieInfo moviInfo={moviInfo} />}
       </>
     </main>
   );

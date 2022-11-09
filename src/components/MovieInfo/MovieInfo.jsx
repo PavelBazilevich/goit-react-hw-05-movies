@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-// import { generateUrl } from 'services/utils';
+import { createUrl } from '../../Utils/createUrl';
 import { FilmInfo, Layout, Image, Heading, Title } from './MovieInfo.styled';
 
 export const MovieInfo = ({ moviInfo }) => {
@@ -15,7 +15,7 @@ export const MovieInfo = ({ moviInfo }) => {
 
   return (
     <Layout>
-      {/* <Image src={generateUrl(poster_path)} alt={original_title} /> */}
+      <Image src={createUrl(poster_path)} alt={original_title} />
       <FilmInfo>
         <Title>
           {title} ({String(release_date).slice(0, 4)})
@@ -24,7 +24,7 @@ export const MovieInfo = ({ moviInfo }) => {
         <Heading>Overviev</Heading>
         <p>{overview}</p>
         <Heading>Genres</Heading>
-        <p>{genres.map(genre => genre.name).join(' ')}</p>
+        <p>{genres && genres.map(genre => genre.name).join(' ')}</p>
       </FilmInfo>
     </Layout>
   );
