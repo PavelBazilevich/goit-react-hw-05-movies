@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { searhMovies } from 'Utils/Api';
-import { Link, Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();

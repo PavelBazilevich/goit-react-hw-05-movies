@@ -19,7 +19,7 @@ const MoviDetails = () => {
       }
     };
     fethDetails();
-  }, []);
+  }, [id, setMoviInfo]);
 
   const location = useLocation();
   const gobackLink = location.state?.from ?? '/movies';
