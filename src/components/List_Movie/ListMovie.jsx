@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { LinkStyled } from 'Utils/Styled';
+import { Text } from 'components/SearchMoviList/SearchMoviList.styled';
 const ListMovie = ({ movies }) => {
   const location = useLocation();
 
@@ -9,7 +10,7 @@ const ListMovie = ({ movies }) => {
         movies.map(({ title, id }) => (
           <li key={id}>
             <LinkStyled to={`movies/${id}`} state={{ from: location }}>
-              <p>{title}</p>
+              <Text>{title}</Text>
             </LinkStyled>
           </li>
         ))}

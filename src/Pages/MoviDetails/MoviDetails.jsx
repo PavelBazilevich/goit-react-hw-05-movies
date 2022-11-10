@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { LinkStyled } from './MoviDetails.styled';
 import { useEffect, useState } from 'react';
 import { getDetails } from 'Utils/Api';
@@ -8,6 +8,9 @@ const MoviDetails = () => {
   const { id } = useParams();
   const [moviInfo, setMoviInfo] = useState({}) ?? {};
   const [error, setError] = useState(null);
+
+  const location = useLocation();
+  const gobackLink = location.state?.from ?? '/movies';
 
   useEffect(() => {
     const fethDetails = async () => {
@@ -21,15 +24,20 @@ const MoviDetails = () => {
     fethDetails();
   }, [id, setMoviInfo]);
 
-  const location = useLocation();
-  const gobackLink = location.state?.from ?? '/movies';
-
   return (
     <main>
       <>
         <LinkStyled to={gobackLink}> ⬅️ Go Back</LinkStyled>
         {error && <h2>{error}</h2>}
         {moviInfo !== 0 && <MovieInfo moviInfo={moviInfo} />}
+        <LinkStyled to="cast" state={{ from: gobackLink }}>
+          Cast
+        </LinkStyled>
+        <LinkStyled to="reviews" state={{ from: gobackLink }}>
+          Reviews
+        </LinkStyled>
+
+        <Outlet />
       </>
     </main>
   );

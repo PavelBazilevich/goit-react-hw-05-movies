@@ -1,56 +1,58 @@
 import { useState } from 'react';
 import { searhMovies } from 'Utils/Api';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { Input, Button, Form } from './Movies.styled';
+import SearchMoviList from 'components/SearchMoviList/SearchMoviList';
+import { useEffect } from 'react';
 
 const Movies = () => {
+  const [resultQuery, setResultQuery] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
-  const [resultQuery, setResultQuery] = useState([]);
   const [error, setError] = useState(null);
 
-  const searchByRequest = async event => {
-    event.preventDefault();
-    try {
-      const fethMovi = await searhMovies(query);
-      setResultQuery(fethMovi);
-      console.log(resultQuery);
-    } catch {
-      setError(
-        'Sorry, it was not possible to download what you were looking for 😥. Please try again 😊'
-      );
-    }
-  };
+  useEffect(() => {
+    if (query === '') return;
+    const searchByRequest = async () => {
+      try {
+        const fethMovi = await searhMovies(query);
+        setResultQuery(fethMovi);
+      } catch {
+        setError(
+          'Sorry, it was not possible to download what you were looking for 😥. Please try again 😊'
+        );
+      }
+    };
+    searchByRequest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
-  // const createMarcup = resultQuery => {
-  //   if (resultQuery !== null) {
-  //     return resultQuery.map(resultQuer => {
-  //       <li key={resultQuer.id}>
-  //         <Link>
-  //           <p>{resultQuer.title}</p>
-  //         </Link>
-  //       </li>;
-  //     });
-  //   }
-  // };
+  const hendleSubmit = event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    setSearchParams({ query: form.elements.query.value });
+  };
 
   return (
     <>
-      <form onSubmit={searchByRequest}>
+      <Form onSubmit={hendleSubmit}>
         <div>
-          <input
+          <Input
+            name="query"
             type="text"
-            value={query}
-            onChange={e => setSearchParams({ query: e.target.value })}
+            defaultValue={query}
             placeholder="Search..."
           />
-          <button type="submit">Search</button>
+          <Button type="submit">Search</Button>
         </div>
-      </form>
+      </Form>
       {error && <p>{error}</p>}
 
-      {/* <ul>{createMarcup()}</ul> */}
-
-      <Outlet />
+      <ul>
+        {resultQuery?.length > 0 && (
+          <SearchMoviList resultQuery={resultQuery} />
+        )}
+      </ul>
     </>
   );
 };

@@ -31,3 +31,21 @@ export const getDetails = async id => {
   });
   return response.data;
 };
+
+export const getCast = async id => {
+  const responce = await axios.get(`movie/${id}/credits`, {
+    params: {
+      api_key: apiKey,
+    },
+  });
+  return responce.data.cast;
+};
+
+export const getReviews = async id => {
+  const responce = await axios.get(`movie/${id}/reviews`, {
+    params: {
+      api_key: apiKey,
+    },
+  });
+  return responce.data.results;
+};
