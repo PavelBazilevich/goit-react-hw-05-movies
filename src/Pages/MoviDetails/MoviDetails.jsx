@@ -1,5 +1,5 @@
 import { useParams, useLocation, Outlet } from 'react-router-dom';
-import { LinkStyled } from './MoviDetails.styled';
+import { LinkStyled, Title } from './MoviDetails.styled';
 import { useEffect, useState } from 'react';
 import { getDetails } from 'Utils/Api';
 import { MovieInfo } from 'components/MovieInfo/MovieInfo';
@@ -30,6 +30,7 @@ const MoviDetails = () => {
         <LinkStyled to={gobackLink}> ⬅️ Go Back</LinkStyled>
         {error && <h2>{error}</h2>}
         {moviInfo !== 0 && <MovieInfo moviInfo={moviInfo} />}
+        <Title>Additional information</Title>
         <LinkStyled to="cast" state={{ from: gobackLink }}>
           Cast
         </LinkStyled>

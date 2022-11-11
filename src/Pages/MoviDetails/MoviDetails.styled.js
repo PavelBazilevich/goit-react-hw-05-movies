@@ -20,3 +20,9 @@ export const LinkStyled = styled(Link)`
     color: white;
   }
 `;
+
+export const Title = styled.p`
+  margin: 10px 35px;
+  font-size: 25px;
+  font-weight: 400;
+`;

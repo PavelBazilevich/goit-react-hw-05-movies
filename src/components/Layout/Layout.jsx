@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container, Header, Link } from './Loyaut.styled';
 const Layout = () => {
@@ -11,7 +12,9 @@ const Layout = () => {
           <Link to="/movies">Movies</Link>
         </nav>
       </Header>
-      <Outlet />
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </Container>
   );
 };
